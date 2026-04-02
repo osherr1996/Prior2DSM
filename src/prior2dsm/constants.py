@@ -1,0 +1,2 @@
+DEFAULT_FIGSIZE = (18, 6)
+EPS = 1e-8
