@@ -1,13 +1,5 @@
 # Prior2DSM
 
-A cleaned and reproducible repository layout for test-time optimization (TTO) of DSM reconstruction using:
-
-- DINOv3 patch features
-- LoRA adaptation on attention layers
-- an MLP decoder that predicts per-patch scale and bias
-- dense stride-based inference
-- raster inputs from GeoTIFF files
-
 ## Repository structure
 
 ```text
@@ -97,3 +89,15 @@ You can extend it to export the final DSM as GeoTIFF.
 - Keep machine-specific paths only inside YAML config files.
 - Do not commit big TIFF files or checkpoints to Git.
 - Prefer small, focused commits during refactoring.
+
+## Citation
+```bibtex
+@misc{rafaeli2026testtimeadaptationheightcompletion,
+      title={Test-Time Adaptation for Height Completion via Self-Supervised ViT Features and Monocular Foundation Models}, 
+      author={Osher Rafaeli and Tal Svoray and Ariel Nahlieli},
+      year={2026},
+      eprint={2604.02009},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2604.02009}, 
+}
