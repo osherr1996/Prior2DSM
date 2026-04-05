@@ -1,4 +1,4 @@
-# Prior2DSM-TTO
+# Prior2DSM
 
 A cleaned and reproducible repository layout for test-time optimization (TTO) of DSM reconstruction using:
 
