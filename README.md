@@ -1,4 +1,5 @@
 # Prior2DSM
+Code for "Test-Time Adaptation for Height Completion via Self-Supervised ViT Features and Monocular Foundation Models" paper
 
 ## Repository structure
 
