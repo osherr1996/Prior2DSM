@@ -1,5 +1,14 @@
 # Prior2DSM
-Code for "Test-Time Adaptation for Height Completion via Self-Supervised ViT Features and Monocular Foundation Models" paper
+Code for "Test-Time Adaptation for Height Completion via Self-Supervised ViT Features and Monocular Foundation Models"
+
+<p align="center">
+  <a href="https://arxiv.org/abs/2604.02009">
+    <img src="https://img.shields.io/badge/arXiv-2604.02009-b31b1b.svg" alt="arXiv">
+  </a>
+  <a href="https://huggingface.co/spaces/osherr/Prior2DSM">
+    <img src="https://img.shields.io/badge/🤗%20HuggingFace-Demo-yellow.svg" alt="Hugging Face">
+  </a>
+</p>
 
 ## Repository structure
 
