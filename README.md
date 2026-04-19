@@ -1,5 +1,6 @@
-# Prior2DSM
-Code for "Test-Time Adaptation for Height Completion via Self-Supervised ViT Features and Monocular Foundation Models"
+# Prior2DSM – Test-Time Adaptation Demo
+
+This repository demonstrates a **test-time adaptation (TTO)** pipeline for converting **relative depth maps into metric DSM (Digital Surface Model)** using **DINOv3 features + LoRA fine-tuning**.
 
 <p align="center">
   <a href="https://arxiv.org/abs/2604.02009">
@@ -10,95 +11,102 @@ Code for "Test-Time Adaptation for Height Completion via Self-Supervised ViT Fea
   </a>
 </p>
 
-## Repository structure
+Here’s a **short, clean README** you can use for your repo:
 
-```text
-prior2dsm-tto/
-├── README.md
-├── .gitignore
-├── requirements.txt
-├── configs/
-│   └── default.yaml
-├── scripts/
-│   ├── run_example.py
-│   └── evaluate_example.py
-├── src/
-│   └── prior2dsm/
-│       ├── __init__.py
-│       ├── config.py
-│       ├── io.py
-│       ├── constants.py
-│       ├── models/
-│       │   ├── __init__.py
-│       │   ├── lora.py
-│       │   ├── mlp_decoder.py
-│       │   └── dino_loader.py
-│       ├── engine/
-│       │   ├── __init__.py
-│       │   ├── tto_trainer.py
-│       │   ├── inference.py
-│       │   └── metrics.py
-│       └── utils/
-│           ├── __init__.py
-│           ├── logging_utils.py
-│           ├── seed.py
-│           └── visualization.py
-├── tests/
-│   ├── test_metrics.py
-│   └── test_mlp_decoder.py
-└── outputs/
+## Overview
+
+The method refines a monocular depth prediction by learning a **per-image scale and bias** using sparse **prior elevation data**.
+It leverages:
+
+* **DINOv3 ViT-L/16** for feature extraction
+* **LoRA (Low-Rank Adaptation)** for efficient test-time tuning
+* **MLP head** to estimate scale and bias
+* **Huber loss** on valid prior regions
+* **Dense sliding-window inference** for high-resolution output
+
+The process is fully **training-free at dataset level** and adapts per image.
+
+---
+
+## Data Structure
+
+Each sample consists of:
+
+* `RGB/` – 3-band RGB image
+* `GT_DSM/` – Ground truth DSM (for evaluation only)
+* `MASK/` – Binary mask of valid target regions
+* `RELATIVE_DEPTH/` – Monocular relative depth (e.g., Depth Anything)
+* `PRIORS/` – Sparse or low-resolution elevation priors
+
+Example file name:
+
+```
+000000000003.tif
 ```
 
-## Installation
+---
 
-```bash
-git clone <your-repo-url>
-cd prior2dsm-tto
-python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
-```
+## Pipeline
 
-## Run
+1. Load RGB, relative depth, priors, and mask
+2. Extract patch tokens using DINOv3
+3. Predict **scale (s) and bias (b)** via MLP
+4. Optimize using:
 
-Update `configs/default.yaml` with your local paths, then:
+   ```
+   DSM = s * relative_depth + b
+   ```
+5. Apply **LoRA-based TTO** using prior supervision
+6. Run **dense full-resolution inference**
+7. Generate:
 
-```bash
-set PYTHONPATH=src
-python scripts/run_example.py --config configs/default.yaml
-```
+   * Final DSM prediction
+   * Training video (optimization process)
+   * Evaluation metrics (MAE)
 
-On Linux/macOS:
-
-```bash
-export PYTHONPATH=src
-python scripts/run_example.py --config configs/default.yaml
-```
-
-## Expected input files
-
-For each `example_name`, the code expects matching filenames in:
-
-- `rgb_dir`: RGB image
-- `gt_dir`: DSM ground truth
-- `mask_dir`: binary evaluation mask
-- `da_dir`: relative depth raster
-- `prior_dir`: prior raster
+---
 
 ## Outputs
 
-The script saves:
+* `.mp4` – optimization process visualization
+* `.png` – final comparison figure
+* Console logs – loss + MAE
 
-- `outputs/figures/<example>_summary.png`
-- `outputs/logs/<example>_metrics.json`
+---
 
-You can extend it to export the final DSM as GeoTIFF.
+## Key Features
+
+* No full model training required
+* Works with **sparse priors**
+* Produces **high-resolution DSM**
+* Efficient adaptation using LoRA
+* Visual debugging via video generation
+
+---
+
+## Requirements
+
+* PyTorch
+* rasterio
+* OpenCV
+* matplotlib
+* DINOv3 (local repo + weights)
+
+---
 
 ## Notes
 
-- Keep machine-specific paths only inside YAML config files.
-- Do not commit big TIFF files or checkpoints to Git.
-- Prefer small, focused commits during refactoring.
+* Update all directory paths in the config section before running
+* Designed for **single-image adaptation** (TTO setting)
+* Ground truth is used only for evaluation, not training
+
+---
+
+If you want, I can also:
+
+* make this **GitHub-polished (badges, visuals, citations)**
+* or add a **paper-style method section matching your Prior2DSM paper**
+
 
 ## Citation
 ```bibtex
