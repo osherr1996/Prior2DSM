@@ -11,8 +11,6 @@ This repository demonstrates a **test-time adaptation (TTO)** pipeline for conve
   </a>
 </p>
 
-Here’s a **short, clean README** you can use for your repo:
-
 ## Overview
 
 The method refines a monocular depth prediction by learning a **per-image scale and bias** using sparse **prior elevation data**.
