@@ -97,12 +97,6 @@ Example file name:
 * Designed for **single-image adaptation** (TTO setting)
 * Ground truth is used only for evaluation, not training
 
----
-
-If you want, I can also:
-
-* make this **GitHub-polished (badges, visuals, citations)**
-* or add a **paper-style method section matching your Prior2DSM paper**
 
 
 ## Citation
