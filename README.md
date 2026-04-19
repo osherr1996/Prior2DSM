@@ -75,7 +75,6 @@ Example file name:
 ## Key Features
 
 * No full model training required
-* Works with **sparse priors**
 * Produces **high-resolution DSM**
 * Efficient adaptation using LoRA
 * Visual debugging via video generation
