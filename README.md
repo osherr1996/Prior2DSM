@@ -1,4 +1,4 @@
-# Prior2DSM – Test-Time Adaptation Demo
+# Prior2DSM – Test-Time Adaptation
 
 This repository demonstrates a **test-time adaptation (TTO)** pipeline for converting **relative depth maps into metric DSM (Digital Surface Model)** using **DINOv3 features + LoRA fine-tuning**.
 
